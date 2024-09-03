@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Waiting List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom animations */
+      .zoom-in {
+        transform: scale(3.5);
+        transition: transform 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-100 min-h-screen flex flex-col items-center justify-center"
+  >
+    <div id="waitingList" class="w-full max-w-md mx-auto"></div>
+
+    <!-- Pagination buttons -->
+    <div class="w-full max-w-md mx-auto flex justify-between mt-4">
+      <button id="prevButton" class="bg-blue-500 text-white px-4 py-2 rounded">
+        Previous
+      </button>
+      <button id="nextButton" class="bg-blue-500 text-white px-4 py-2 rounded">
+        Next
+      </button>
+    </div>
+
+    <script>
+      let people = [
+        {
+          id: "001",
+          name: "John Doe",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "002",
+          name: "Jane Smith",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "003",
+          name: "Bob Johnson",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "004",
+          name: "Johnson Bob",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "005",
+          name: "Bobby Brown",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "006",
+          name: "Alice Gay",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "007",
+          name: "James Bond",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "008",
+          name: "Bruce Wayne",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "009",
+          name: "Clark Kent",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "010",
+          name: "Diana Prince",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "011",
+          name: "Peter Parker",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "012",
+          name: "Tony Stark",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "013",
+          name: "Steve Rogers",
+          image: "https://via.placeholder.com/50",
+        },
+        {
+          id: "014",
+          name: "Natasha Romanoff",
+          image: "https://via.placeholder.com/50",
+        },
+      ];
+
+      let currentPage = 0;
+      const itemsPerPage = 7;
+
+      function displayCards() {
+        const start = currentPage * itemsPerPage;
+        const end = start + itemsPerPage;
+        const currentItems = people.slice(start, end);
+
+        const waitingList = document.getElementById("waitingList");
+        waitingList.innerHTML = "";
+
+        currentItems.forEach((person, index) => {
+          const card = document.createElement("div");
+          card.id = `card-${person.id}`;
+          card.className =
+            "waiting-card bg-white p-4 mb-4 shadow-md rounded-lg flex items-center";
+          card.innerHTML = `
+          <img src="${person.image}" alt="Person Image" class="rounded-full w-12 h-12 mr-4" />
+          <div>
+            <h3 class="text-lg font-semibold">${person.name}</h3>
+            <p>ID: ${person.id}</p>
+          </div>
+        `;
+          waitingList.appendChild(card);
+        });
+      }
+
+      function callPerson(id) {
+        const cardIndex = people.findIndex((person) => person.id === id);
+
+        if (cardIndex !== -1) {
+          const card = document.getElementById(`card-${id}`);
+          if (card) {
+            card.classList.add("zoom-in");
+          }
+
+          setTimeout(() => {
+            people.splice(cardIndex, 1); // Remove the card from the array
+            if (
+              currentPage * itemsPerPage >= people.length &&
+              currentPage > 0
+            ) {
+              currentPage--; // Move to the previous page if we're beyond the last page
+            }
+            displayCards(); // Refresh the display
+          }, 3000); // 3000ms corresponds to the transition duration in the CSS
+        }
+      }
+
+      document.getElementById("nextButton").addEventListener("click", () => {
+        currentPage++;
+        if (currentPage * itemsPerPage >= people.length) {
+          currentPage = 0; // Loop back to the first page
+        }
+        displayCards();
+      });
+
+      document.getElementById("prevButton").addEventListener("click", () => {
+        currentPage--;
+        if (currentPage < 0) {
+          currentPage = Math.floor((people.length - 1) / itemsPerPage); // Loop back to the last page
+        }
+        displayCards();
+      });
+
+      // Initial display
+      displayCards();
+
+      // testing calling
+
+      setTimeout(() => callPerson("003"), 8000);
+      setTimeout(() => callPerson("005"), 12000);
+      setTimeout(() => callPerson("004"), 16000);
+      setTimeout(() => callPerson("001"), 20000);
+    </script>
+  </body>
+</html>
