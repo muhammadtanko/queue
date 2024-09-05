@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guest Waiting List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 p-4">
+    <div class="flex flex-row justify-between mb-3">
+      <h1 style="color: sienna; font-size: xx-large; font-weight: bolder">
+        Governor's Guest List
+      </h1>
+      <button
+        onclick="{ localStorage.clear(); window.location.href = 'login.html'; }"
+        style="
+          background-color: sienna;
+          color: white;
+          padding: 10px;
+          border-radius: 10px;
+        "
+      >
+        Logout
+      </button>
+    </div>
+
+    <!-- Grid of Cards -->
+    <div
+      id="guestGrid"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      <!-- Example Card -->
+      <div
+        id="guest-1"
+        class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4"
+      >
+        <div style="width: 75%">
+          <img
+            class="w-16 h-16 rounded-full"
+            src="https://i.pravatar.cc/304"
+            alt="Avatar"
+          />
+          <div>
+            <h2 class="text-xl font-semibold">Umar Jere</h2>
+            <p class="text-gray-500">ID: 1</p>
+            <p class="text-gray-500">Phone Number: 070332423543</p>
+            <p class="text-gray-500">
+              Address: Kaduna state University, Kaduna state, Nigeria
+            </p>
+            <p class="text-gray-500">Booking Time: 9:00am</p>
+          </div>
+        </div>
+        <div
+          class="second"
+          style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 25%;
+            justify-content: space-between;
+            box-shadow: 4px 5px 15px 3px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+          "
+        >
+          <div
+            class="top"
+            style="
+              background-color: gray;
+              box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              padding: 10px;
+              text-align: center;
+              font-weight: bold;
+              font-size: medium;
+              text-align: center;
+            "
+          >
+            Visitor
+          </div>
+          <div
+            class="bottom"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: end;
+              height: 70%;
+              font-weight: bolder;
+              font-size: large;
+            "
+          >
+            Normal
+          </div>
+        </div>
+      </div>
+      <div
+        id="guest-2"
+        class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4"
+      >
+        <div style="width: 75%">
+          <img
+            class="w-16 h-16 rounded-full"
+            src="https://i.pravatar.cc/305"
+            alt="Avatar"
+          />
+          <div>
+            <h2 class="text-xl font-semibold">AbdulRaheem Ahmad</h2>
+            <p class="text-gray-500">ID: 2</p>
+            <p class="text-gray-500">Phone Number: 070332423543</p>
+            <p class="text-gray-500">
+              Address: Kaduna state University, Kaduna state, Nigeria
+            </p>
+            <p class="text-gray-500">Booking Time: 9:30am</p>
+          </div>
+        </div>
+        <div
+          class="second"
+          style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 25%;
+            justify-content: space-between;
+            box-shadow: 4px 5px 15px 3px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+          "
+        >
+          <div
+            class="top"
+            style="
+              background-color: yellow;
+              box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              padding: 10px;
+              text-align: center;
+              font-weight: bold;
+              font-size: medium;
+              text-align: center;
+            "
+          >
+            VIP
+          </div>
+          <div
+            class="bottom"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: end;
+              height: 70%;
+              font-weight: bolder;
+              font-size: large;
+            "
+          >
+            1
+          </div>
+        </div>
+      </div>
+      <!-- *** -->
+      <div
+        id="guest-3"
+        class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4"
+      >
+        <div style="width: 75%">
+          <img
+            class="w-16 h-16 rounded-full"
+            src="https://i.pravatar.cc/306"
+            alt="Avatar"
+          />
+          <div>
+            <h2 class="text-xl font-semibold">Uslash Murtala</h2>
+            <p class="text-gray-500">ID: 3</p>
+            <p class="text-gray-500">Phone Number: 070332423543</p>
+            <p class="text-gray-500">
+              Address: Kaduna state University, Kaduna state, Nigeria
+            </p>
+            <p class="text-gray-500">Booking Time: 10:00am</p>
+          </div>
+        </div>
+        <div
+          class="second"
+          style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 25%;
+            justify-content: space-between;
+            box-shadow: 4px 5px 15px 3px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+          "
+        >
+          <div
+            class="top"
+            style="
+              background-color: green;
+              box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              padding: 10px;
+              text-align: center;
+              font-weight: bold;
+              font-size: medium;
+              text-align: center;
+            "
+          >
+            VIP
+          </div>
+          <div
+            class="bottom"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: end;
+              height: 70%;
+              font-weight: bolder;
+              font-size: large;
+            "
+          >
+            2
+          </div>
+        </div>
+      </div>
+      <div
+        id="guest-4"
+        class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4"
+      >
+        <div style="width: 75%">
+          <img
+            class="w-16 h-16 rounded-full"
+            src="https://i.pravatar.cc/307"
+            alt="Avatar"
+          />
+          <div>
+            <h2 class="text-xl font-semibold">Muhammad Tanko</h2>
+            <p class="text-gray-500">ID: 4</p>
+            <p class="text-gray-500">Phone Number: 070332423543</p>
+            <p class="text-gray-500">
+              Address: Kaduna state University, Kaduna state, Nigeria
+            </p>
+            <p class="text-gray-500">Booking Time: 10:30am</p>
+          </div>
+        </div>
+        <div
+          class="second"
+          style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 25%;
+            justify-content: space-between;
+            box-shadow: 4px 5px 15px 3px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+          "
+        >
+          <div
+            class="top"
+            style="
+              background-color: red;
+              box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              padding: 10px;
+              text-align: center;
+              font-weight: bold;
+              font-size: medium;
+              text-align: center;
+            "
+          >
+            VIP
+          </div>
+          <div
+            class="bottom"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: end;
+              height: 70%;
+              font-weight: bolder;
+              font-size: large;
+            "
+          >
+            3
+          </div>
+        </div>
+      </div>
+      <div
+        id="guest-5"
+        class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4"
+      >
+        <div style="width: 75%">
+          <img
+            class="w-16 h-16 rounded-full"
+            src="https://i.pravatar.cc/308"
+            alt="Avatar"
+          />
+          <div>
+            <h2 class="text-xl font-semibold">Jane Doe</h2>
+            <p class="text-gray-500">ID: 5</p>
+            <p class="text-gray-500">Phone Number: 070332423543</p>
+            <p class="text-gray-500">
+              Address: Kaduna state University, Kaduna state, Nigeria
+            </p>
+            <p class="text-gray-500">Booking Time: 11:00am</p>
+          </div>
+        </div>
+        <div
+          class="second"
+          style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 25%;
+            justify-content: space-between;
+            box-shadow: 4px 5px 15px 3px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+          "
+        >
+          <div
+            class="top"
+            style="
+              background-color: gray;
+              box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              padding: 10px;
+              text-align: center;
+              font-weight: bold;
+              font-size: medium;
+              text-align: center;
+            "
+          >
+            Visitor
+          </div>
+          <div
+            class="bottom"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: end;
+              height: 70%;
+              font-weight: bolder;
+              font-size: large;
+            "
+          >
+            Normal
+          </div>
+        </div>
+      </div>
+      <div
+        id="guest-6"
+        class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4"
+      >
+        <div style="width: 75%">
+          <img
+            class="w-16 h-16 rounded-full"
+            src="https://i.pravatar.cc/309"
+            alt="Avatar"
+          />
+          <div>
+            <h2 class="text-xl font-semibold">Feyishola Ologs</h2>
+            <p class="text-gray-500">ID: 6</p>
+            <p class="text-gray-500">Phone Number: 070332423543</p>
+            <p class="text-gray-500">
+              Address: Kaduna state University, Kaduna state, Nigeria
+            </p>
+            <p class="text-gray-500">Booking Time: 12:00pm</p>
+          </div>
+        </div>
+        <div
+          class="second"
+          style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 25%;
+            justify-content: space-between;
+            box-shadow: 4px 5px 15px 3px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+          "
+        >
+          <div
+            class="top"
+            style="
+              background-color: gray;
+              box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+              padding: 10px;
+              text-align: center;
+              font-weight: bold;
+              font-size: medium;
+              text-align: center;
+            "
+          >
+            Visitor
+          </div>
+          <div
+            class="bottom"
+            style="
+              display: flex;
+              justify-content: center;
+              /* align-items: center; */
+              align-items: end;
+              height: 70%;
+              font-weight: bolder;
+              font-size: large;
+            "
+          >
+            Normal
+          </div>
+        </div>
+      </div>
+      <!-- Add more cards similarly with unique IDs -->
+    </div>
+
+    <!-- Modal -->
+    <div
+      id="guestModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50"
+    >
+      <div
+        class="bg-white rounded-lg p-6 w-full max-w-xl shadow-lg h-[500px]"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: row;
+        "
+      >
+        <div id="modalContent" class="flex">
+          <!-- Modal content will be injected here -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const socket = new WebSocket("ws://localhost:8080");
+
+      socket.onmessage = function (event) {
+        const guestId = event.data; // Assuming the socket sends only the ID
+        const guestCard = document.getElementById(`guest-${guestId}`);
+
+        if (guestCard) {
+          // Show Modal
+          showModal(guestCard);
+
+          // Remove Card after 15 seconds
+          setTimeout(() => {
+            guestCard.remove();
+            closeModal();
+          }, 15000);
+        }
+      };
+
+      function showModal(guestCard) {
+        const modal = document.getElementById("guestModal");
+        const modalContent = document.getElementById("modalContent");
+
+        // Clone and insert guest card into modal
+        const clonedContent = guestCard.cloneNode(true);
+
+        const img = clonedContent.querySelector("img");
+        const secondDiv = clonedContent.querySelector(".second");
+        const statusDiv = clonedContent.querySelector(".bottom");
+
+        if (img) {
+          img.style.width = "196px";
+          img.style.height = "196px";
+        }
+
+        if (secondDiv) {
+          secondDiv.style.height = "100%";
+          secondDiv.style.justifyContent = "space-between";
+        }
+
+        if (statusDiv) {
+          statusDiv.style.alignItems = "end";
+        }
+
+        modalContent.innerHTML = "";
+
+        const message = document.createElement("h2");
+        message.textContent = "Please go in for your meeting.";
+        message.style.textAlign = "center";
+        message.style.color = "red";
+        message.style.width = "100%";
+        message.style.marginBottom = "20px";
+        message.style.fontWeight = "bold";
+        message.style.fontSize = "28px";
+
+        // Create a wrapper for the content
+        const contentWrapper = document.createElement("div");
+        contentWrapper.style.display = "flex";
+        contentWrapper.style.flexDirection = "column";
+        contentWrapper.style.width = "100%";
+        // contentWrapper.style.height = "100%";
+
+        contentWrapper.appendChild(message);
+        contentWrapper.appendChild(clonedContent);
+
+        modalContent.appendChild(contentWrapper);
+
+        // Show the modal
+        modal.classList.remove("hidden");
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("guestModal");
+        modal.classList.add("hidden");
+      }
+    </script>
+  </body>
+</html>

@@ -27,6 +27,7 @@
         background-color: #f0f0f0;
         font-family: Arial, sans-serif;
       }
+
       .login-container {
         background-color: white;
         padding: 60px;
@@ -43,13 +44,28 @@
         font-size: 28px;
       }
 
-      .login-container input {
+      .login-container input,
+      .login-container select {
         width: 100%;
         padding: 15px;
         margin: 12px 0;
         border: 1px solid #ccc;
         border-radius: 6px;
         font-size: 16px;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s;
+      }
+
+      .login-container input:focus,
+      .login-container select:focus {
+        border-color: #4caf50;
+      }
+
+      .login-container select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: #f9f9f9;
       }
 
       .login-container button {
@@ -72,26 +88,27 @@
       /* Responsive adjustments */
       @media (min-width: 768px) {
         .login-container {
-          width: 500px; /* Larger width for tablets and above */
+          width: 500px;
         }
 
         .login-container h2 {
-          font-size: 32px; /* Larger font size for the title */
+          font-size: 32px;
         }
 
         .login-container button {
-          font-size: 20px; /* Larger button text */
+          font-size: 20px;
         }
       }
 
       @media (min-width: 1024px) {
         .login-container {
-          width: 600px; /* Larger width for desktops */
-          padding: 80px; /* Increased padding */
+          width: 600px;
+          padding: 80px;
         }
 
-        .login-container input {
-          padding: 18px; /* Larger input fields */
+        .login-container input,
+        .login-container select {
+          padding: 18px;
           font-size: 18px;
         }
       }
@@ -101,11 +118,40 @@
     <div class="login-container">
       <h2>Login</h2>
 
-      <input type="text" placeholder="Username" />
-      <input type="password" placeholder="Password" />
-      <a href="rooms.html">
-        <button type="submit">Login</button>
-      </a>
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+
+      <!-- <label for="guestList">Select Guest List:</label> -->
+      <select id="guestList" required>
+        <option value="">Select Guest List</option>
+        <option value="governor">Governor's Guest</option>
+        <option value="firstlady">First Lady's Guest</option>
+        <option value="deputy">Deputy Governor's Guest</option>
+      </select>
+
+      <button type="submit" onclick="login()">Login</button>
     </div>
+
+    <script>
+      window.onload = function () {
+        const selectedRoom = localStorage.getItem("selectedRoom");
+        if (selectedRoom) {
+          window.location.href = selectedRoom + "queue.html";
+        }
+      };
+
+      function login() {
+        const guestList = document.getElementById("guestList").value;
+
+        if (!guestList) {
+          alert("Please select a guest list.");
+          return;
+        }
+
+        localStorage.setItem("selectedRoom", guestList);
+
+        window.location.href = guestList + "queue.html";
+      }
+    </script>
   </body>
 </html>
