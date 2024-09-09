@@ -1,402 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guest Waiting List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .card {
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        height: 150px;
+      }
+      .second {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        width: 25%;
+        border-left: 1px solid #d5d5cd;
+      }
+      .top {
+        text-align: center;
+        font-weight: bold;
+        font-size: medium;
+      }
+      .bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70%;
+        font-weight: bolder;
+        font-size: large;
+      }
+      #guestModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guest Waiting List</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+      #modalContent {
+        width: 90%;
+        max-width: 500px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        padding: 20px;
+        text-align: center;
+      }
 
-</head>
+      #guestModal.hidden {
+        display: none;
+      }
 
-<body class="bg-gray-100 p-4">
-  <div class="flex flex-row justify-between mb-3">
-    <h1 style="color: sienna; font-size: xx-large; font-weight: bolder">
-      Governor's Guest List
-    </h1>
-    <div class="flex justify-between gap-3">
-      <div class="flex justify-center items-center">
-        <a class="" href="settings.html">
-          <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5f6368">
-            <path
-              d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
-          </svg></a>
+      img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 20px;
+      }
+
+      h2 {
+        font-size: 24px;
+        color: #d32f2f;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100 p-4">
+    <div class="flex flex-row justify-between mb-3">
+      <h1 style="color: sienna; font-size: xx-large; font-weight: bolder">
+        Governor's Guest List
+      </h1>
+      <div class="flex justify-between gap-3">
+        <div class="flex justify-center items-center">
+          <a class="" href="settings.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#5f6368"
+            >
+              <path
+                d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"
+              /></svg
+          ></a>
+        </div>
+        <button
+          onclick="{ localStorage.clear(); window.location.href = 'login.html'; }"
+          style="
+            background-color: sienna;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+          "
+        >
+          Logout
+        </button>
       </div>
-      <button onclick="{ localStorage.clear(); window.location.href = 'login.html'; }" style="
-          background-color: sienna;
-          color: white;
-          padding: 10px;
-          border-radius: 10px;
-        ">
-        Logout
-      </button>
     </div>
 
-  </div>
+    <!-- Grid of Cards -->
+    <div
+      id="guestGrid"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      <!-- Dynamic guest cards will be inserted here -->
+    </div>
 
-  <!-- Grid of Cards -->
-  <div id="guestGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Example Card -->
-    <div id="guest-1" class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4">
-      <div style="width: 75%">
-        <img class="w-16 h-16 rounded-full" src="https://i.pravatar.cc/304" alt="Avatar" />
-        <div>
-          <h2 class="text-2xl font-semibold">Umar Jere</h2>
-          <p class="text-gray-500"> <span class="font-bold text-black">Place of work:</span> Lexington</p>
-          <p class="text-gray-500">
-             <span class="font-bold text-black">Designation:</span> CEO 
-          </p>
-          <p class="text-gray-500"><span class="font-bold text-black">Booking Time:</span>  9:00am</p>
-        </div>
-      </div>
-      <div class="second" style="
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 25%;
-            justify-content: space-between;
-            padding: 5px;
-            border-left: 1px solid #d5d5cd;
-          ">
-        <div class="top" style="
-              background-color: #D5D5CD;
-              border-radius: 8px;
-              padding: 10px;
-              text-align: center;
-              font-weight: bold;
-              font-size: medium;
-              text-align: center;
-            ">
-          Visitor
-        </div>
-        <div class="bottom" style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 70%;
-              font-weight: bolder;
-              font-size: large;
-            ">
-          Normal
-        </div>
-      </div>
-    </div>
-    <div id="guest-2" class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4">
-      <div style="width: 75%">
-        <img class="w-16 h-16 rounded-full" src="https://i.pravatar.cc/305" alt="Avatar" />
-        <div>
-          <h2 class="text-xl font-semibold">AbdulRaheem Ahmad</h2>
-          <p class="text-gray-500"> <span class="font-bold text-black">Place of work:</span> Lexington</p>
-          <p class="text-gray-500">
-             <span class="font-bold text-black">Designation:</span> CEO 
-          </p>
-          <p class="text-gray-500"><span class="font-bold text-black">Booking Time:</span>  9:00am</p>
-        </div>
-      </div>
-      <div class="second" style="
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 25%;
-            justify-content: space-between;
-            padding: 5px;
-            border-left: 1px solid #d5d5cd;
-          ">
-        <div class="top" style="
-              background-color: #FCB810;
-              border-radius: 8px;
-              padding: 10px;
-              text-align: center;
-              font-weight: bold;
-              font-size: medium;
-              text-align: center;
-            ">
-          VIP
-        </div>
-        <div class="bottom" style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 70%;
-              font-weight: bolder;
-              font-size: large;
-            ">
-          1
-        </div>
-      </div>
-    </div>
-    <!-- *** -->
-    <div id="guest-3" class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4">
-      <div style="width: 75%">
-        <img class="w-16 h-16 rounded-full" src="https://i.pravatar.cc/306" alt="Avatar" />
-        <div>
-          <h2 class="text-xl font-semibold">Uslash Murtala</h2>
-          <p class="text-gray-500"> <span class="font-bold text-black">Place of work:</span> Lexington</p>
-          <p class="text-gray-500">
-             <span class="font-bold text-black">Designation:</span> CEO 
-          </p>
-          <p class="text-gray-500"><span class="font-bold text-black">Booking Time:</span>  9:00am</p>
-        </div>
-      </div>
-      <div class="second" style="
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 25%;
-            justify-content: space-between;
-            border-left: 1px solid #d5d5cd;
-            padding: 5px;
-          ">
-        <div class="top" style="
-              background-color: #AAFF00;
-              border-radius: 8px;
-              padding: 10px;
-              text-align: center;
-              font-weight: bold;
-              font-size: medium;
-              text-align: center;
-            ">
-          VIP
-        </div>
-        <div class="bottom" style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 70%;
-              font-weight: bolder;
-              font-size: large;
-            ">
-          2
-        </div>
-      </div>
-    </div>
-    <div id="guest-4" class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4">
-      <div style="width: 75%">
-        <img class="w-16 h-16 rounded-full" src="https://i.pravatar.cc/307" alt="Avatar" />
-        <div>
-          <h2 class="text-xl font-semibold">Muhammad Tanko</h2>
-          <p class="text-gray-500"> <span class="font-bold text-black">Place of work:</span> Lexington</p>
-          <p class="text-gray-500">
-             <span class="font-bold text-black">Designation:</span> CEO 
-          </p>
-          <p class="text-gray-500"><span class="font-bold text-black">Booking Time:</span>  9:00am</p>
-        </div>
-      </div>
-      <div class="second" style="
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 25%;
-            justify-content: space-between;
-            padding: 5px;
-            border-left: 1px solid #d5d5cd;
-          ">
-        <div class="top" style="
-              background-color: #FD0E35;
-              border-radius: 8px;
-              padding: 10px;
-              text-align: center;
-              font-weight: bold;
-              font-size: medium;
-              text-align: center;
-            ">
-          VIP
-        </div>
-        <div class="bottom" style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 70%;
-              font-weight: bolder;
-              font-size: large;
-            ">
-          3
-        </div>
-      </div>
-    </div>
-    <div id="guest-5" class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4">
-      <div style="width: 75%">
-        <img class="w-16 h-16 rounded-full" src="https://i.pravatar.cc/308" alt="Avatar" />
-        <div>
-          <h2 class="text-xl font-semibold">Jane Doe</h2>
-          <p class="text-gray-500"> <span class="font-bold text-black">Place of work:</span> Lexington</p>
-          <p class="text-gray-500">
-             <span class="font-bold text-black">Designation:</span> CEO 
-          </p>
-          <p class="text-gray-500"><span class="font-bold text-black">Booking Time:</span>  9:00am</p>
-        </div>
-      </div>
-      <div class="second" style="
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 25%;
-            justify-content: space-between;
-            padding: 5px;
-            border-left: 1px solid #d5d5cd;
-          ">
-        <div class="top" style="
-              background-color: #D5D5CD;
-              border-radius: 8px;
-              padding: 10px;
-              text-align: center;
-              font-weight: bold;
-              font-size: medium;
-              text-align: center;
-            ">
-          Visitor
-        </div>
-        <div class="bottom" style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 70%;
-              font-weight: bolder;
-              font-size: large;
-            ">
-          Normal
-        </div>
-      </div>
-    </div>
-    <div id="guest-6" class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4">
-      <div style="width: 75%">
-        <img class="w-16 h-16 rounded-full" src="https://i.pravatar.cc/309" alt="Avatar" />
-        <div>
-          <h2 class="text-xl font-semibold">Feyishola Ologs</h2>
-          <p class="text-gray-500"> <span class="font-bold text-black">Place of work:</span> Lexington</p>
-          <p class="text-gray-500">
-             <span class="font-bold text-black">Designation:</span> CEO 
-          </p>
-          <p class="text-gray-500"><span class="font-bold text-black">Booking Time:</span>  9:00am</p>
-        </div>
-      </div>
-      <div class="second" style="
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 25%;
-            justify-content: space-between;
-            padding: 5px;
-            border-left: 1px solid #d5d5cd;
-          ">
-        <div class="top" style="
-              background-color: #D5D5CD;
-              border-radius: 8px;
-              padding: 10px;
-              text-align: center;
-              font-weight: bold;
-              font-size: medium;
-              text-align: center;
-            ">
-          Visitor
-        </div>
-        <div class="bottom" style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 70%;
-              font-weight: bolder;
-              font-size: large;
-            ">
-          Normal
-        </div>
-      </div>
-    </div>
-    <!-- Add more cards similarly with unique IDs -->
-  </div>
-
-  <!-- Modal -->
-  <div id="guestModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 w-full max-w-xl shadow-lg h-[500px]" style="
+    <!-- Modal -->
+    <div
+      id="guestModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50"
+    >
+      <div
+        class="bg-white rounded-lg p-6 w-full max-w-xl shadow-lg h-[500px]"
+        style="
           display: flex;
           justify-content: center;
           align-items: center;
           flex-direction: row;
-        ">
-      <div id="modalContent" class="flex">
-        <!-- Modal content will be injected here -->
+        "
+      >
+        <div id="modalContent" class="flex">
+          <!-- Modal content will be injected here -->
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    const socket = new WebSocket("ws://localhost:8080");
+    <script>
+      const socket = new WebSocket("ws://localhost:8080");
 
-    socket.onmessage = function (event) {
-      const guestId = event.data; // Assuming the socket sends only the ID
-      const guestCard = document.getElementById(`guest-${guestId}`);
+      socket.onmessage = function (event) {
+        const guestId = event.data; // Assuming the socket sends only the ID
+        const guestCard = document.getElementById(`guest-${guestId}`);
 
-      if (guestCard) {
-        // Show Modal
-        showModal(guestCard);
+        if (guestCard) {
+          // Show Modal
+          showModal(guestCard);
 
-        // Remove Card after 15 seconds
-        setTimeout(() => {
-          // guestCard.remove();
-          closeModal();
-        }, 15000);
-        guestCard.style.backgroundColor = '#94a3b8'
+          // Remove Card after 15 seconds
+          setTimeout(() => {
+            // guestCard.remove();
+            closeModal();
+          }, 15000);
+          guestCard.style.backgroundColor = "#94a3b8";
+        }
+      };
+
+      function showModal(guestCard) {
+        const modal = document.getElementById("guestModal");
+        const modalContent = document.getElementById("modalContent");
+
+        // Clone and insert guest card into modal
+        const clonedContent = guestCard.cloneNode(true);
+        const firstDiv = clonedContent.querySelector("div");
+
+        firstDiv.style.width = "100%";
+
+        // Style the cloned content elements
+        const img = clonedContent.querySelector("img");
+        const secondDiv = clonedContent.querySelector(".second");
+        const statusDiv = clonedContent.querySelector(".bottom");
+
+        clonedContent.style.height = "100%";
+        clonedContent.style.boxShadow = "none";
+        secondDiv.style.display = "none";
+
+        if (img) {
+          img.style.width = "150px";
+          img.style.height = "150px";
+          img.style.borderRadius = "50%"; // Make the image circular for a modern look
+          img.style.objectFit = "cover"; // Ensure the image doesn't stretch
+          img.style.marginBottom = "20px";
+        }
+
+        if (secondDiv) {
+          secondDiv.style.height = "auto";
+          secondDiv.style.justifyContent = "space-around";
+          secondDiv.style.padding = "10px 0";
+        }
+
+        if (statusDiv) {
+          statusDiv.style.alignItems = "flex-end";
+        }
+
+        modalContent.innerHTML = ""; // Clear any previous content
+
+        // Create message
+        const message = document.createElement("h2");
+        message.textContent =
+          "The following visitor should please proceed for his/her meeting.";
+        message.style.textAlign = "center";
+        message.style.color = "#D32F2F";
+        message.style.width = "100%";
+        message.style.marginBottom = "20px";
+        message.style.fontWeight = "bold";
+        message.style.fontSize = "24px";
+        message.style.lineHeight = "1.4";
+
+        // Create a wrapper for the content
+        const contentWrapper = document.createElement("div");
+        contentWrapper.style.display = "flex";
+        contentWrapper.style.flexDirection = "column";
+        contentWrapper.style.alignItems = "center";
+        contentWrapper.style.padding = "20px"; // Add padding for spacing
+        contentWrapper.style.backgroundColor = "#fff"; // Background white for content
+        contentWrapper.style.borderRadius = "8px"; // Rounded corners for a modern look
+        //contentWrapper.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
+
+        contentWrapper.appendChild(message);
+        contentWrapper.appendChild(clonedContent);
+
+        modalContent.appendChild(contentWrapper);
+
+        // Show the modal
+        modal.classList.remove("hidden");
       }
-    };
 
-    function showModal(guestCard) {
-      const modal = document.getElementById("guestModal");
-      const modalContent = document.getElementById("modalContent");
-
-      // Clone and insert guest card into modal
-      const clonedContent = guestCard.cloneNode(true);
-
-      const img = clonedContent.querySelector("img");
-      const secondDiv = clonedContent.querySelector(".second");
-      const statusDiv = clonedContent.querySelector(".bottom");
-
-      if (img) {
-        img.style.width = "196px";
-        img.style.height = "196px";
+      function closeModal() {
+        const modal = document.getElementById("guestModal");
+        modal.classList.add("hidden");
       }
 
-      if (secondDiv) {
-        secondDiv.style.height = "100%";
-        secondDiv.style.justifyContent = "space-between";
+      <!-- guest card -->
+      const guestData = [
+        {
+          name: "Umar Jere",
+          image: "https://i.pravatar.cc/300",
+          placeOfWork: "Lexington",
+          designation: "CEO",
+          bookingTime: "9:00am",
+          topBgColor: "#d5d5cd",
+          topContent: "Visitor",
+          bottomContent: "Normal",
+        },
+        {
+          name: "Abdulraheem Ahmad",
+          image: "https://i.pravatar.cc/301",
+          placeOfWork: "Lexington",
+          designation: "CEO",
+          bookingTime: "9:00am",
+          topBgColor: "#fcb810",
+          topContent: "VIP",
+          bottomContent: "1",
+        },
+        {
+          name: "Muhammad Tanko",
+          image: "https://i.pravatar.cc/302",
+          placeOfWork: "Lexington",
+          designation: "CEO",
+          bookingTime: "9:00am",
+          topBgColor: "#aaff00",
+          topContent: "VIP",
+          bottomContent: "2",
+        },
+        {
+          name: "Feyishola Ologs",
+          image: "https://i.pravatar.cc/303",
+          placeOfWork: "Lexington",
+          designation: "CEO",
+          bookingTime: "9:00am",
+          topBgColor: "#fd0e35",
+          topContent: "VIP",
+          bottomContent: "3",
+        },
+        {
+          name: "Uslash Murtala",
+          image: "https://i.pravatar.cc/304",
+          placeOfWork: "Lexington",
+          designation: "CEO",
+          bookingTime: "9:00am",
+          topBgColor: "#d5d5cd",
+          topContent: "Visitor",
+          bottomContent: "Normal",
+        },
+        {
+          name: "Jane Doe",
+          image: "https://i.pravatar.cc/305",
+          placeOfWork: "Lexington",
+          designation: "CEO",
+          bookingTime: "9:00am",
+          topBgColor: "#d5d5cd",
+          topContent: "Visitor",
+          bottomContent: "Normal",
+        },
+        {
+          name: "John Doo",
+          image: "https://i.pravatar.cc/306",
+          placeOfWork: "Lexington",
+          designation: "CEO",
+          bookingTime: "9:00am",
+          topBgColor: "#d5d5cd",
+          topContent: "Visitor",
+          bottomContent: "Normal",
+        },
+      ];
+
+      function createGuestCard(guest, index) {
+        const guestCard = document.createElement("div");
+        guestCard.className = "card";
+        guestCard.id = `guest-${index + 1}`; // Assign unique ID
+
+        // Left section (image and info)
+        const leftSection = document.createElement("div");
+        leftSection.className = "flex flex-row gap-5";
+        leftSection.style.width = "75%";
+        leftSection.style.paddingLeft = "10px";
+
+        const img = document.createElement("img");
+        img.className = "w-16 h-16 rounded-full";
+        img.style.marginLeft = "10px";
+        img.style.marginRight = "10px";
+        img.src = guest.image;
+        img.alt = "Avatar";
+
+        const info = document.createElement("div");
+        info.style.width = "100%";
+        const name = document.createElement("h3");
+        name.className = "text-2xl font-semibold";
+        name.textContent = guest.name;
+
+        const work = document.createElement("p");
+        work.className = "text-gray-500";
+        work.innerHTML = `<span class="font-bold text-black">Place of work:</span> ${guest.placeOfWork}`;
+
+        const designation = document.createElement("p");
+        designation.className = "text-gray-500";
+        designation.innerHTML = `<span class="font-bold text-black">Designation:</span> ${guest.designation}`;
+
+        const bookingTime = document.createElement("p");
+        bookingTime.className = "text-gray-500";
+        bookingTime.innerHTML = `<span class="font-bold text-black">Booking Time:</span> ${guest.bookingTime}`;
+
+        info.appendChild(name);
+        info.appendChild(work);
+        info.appendChild(designation);
+        info.appendChild(bookingTime);
+
+        leftSection.appendChild(img);
+        leftSection.appendChild(info);
+
+        // Right section (second div)
+        const rightSection = document.createElement("div");
+        rightSection.className = "second";
+
+        const topDiv = document.createElement("div");
+        topDiv.className = "top";
+        topDiv.style.backgroundColor = guest.topBgColor;
+        topDiv.style.padding = "10px";
+        topDiv.textContent = guest.topContent;
+
+        const bottomDiv = document.createElement("div");
+        bottomDiv.className = "bottom";
+        bottomDiv.textContent = guest.bottomContent;
+
+        rightSection.appendChild(topDiv);
+        rightSection.appendChild(bottomDiv);
+
+        // Append sections to guest card
+        guestCard.appendChild(leftSection);
+        guestCard.appendChild(rightSection);
+
+        return guestCard;
       }
 
-      if (statusDiv) {
-        statusDiv.style.alignItems = "end";
-      }
-
-      modalContent.innerHTML = "";
-
-      const message = document.createElement("h2");
-      message.textContent = "The following visitor should please proceed for his/her meeting.";
-      message.style.textAlign = "center";
-      message.style.color = "red";
-      message.style.width = "100%";
-      message.style.marginBottom = "20px";
-      message.style.fontWeight = "bold";
-      message.style.fontSize = "28px";
-
-      // Create a wrapper for the content
-      const contentWrapper = document.createElement("div");
-      contentWrapper.style.display = "flex";
-      contentWrapper.style.flexDirection = "column";
-      contentWrapper.style.width = "100%";
-      // contentWrapper.style.height = "100%";
-
-      contentWrapper.appendChild(message);
-      contentWrapper.appendChild(clonedContent);
-
-      modalContent.appendChild(contentWrapper);
-
-      // Show the modal
-      modal.classList.remove("hidden");
-    }
-
-    function closeModal() {
-      const modal = document.getElementById("guestModal");
-      modal.classList.add("hidden");
-    }
-    
-  </script>
-</body>
-
+      // Append guest cards to the grid container
+      const guestGrid = document.getElementById("guestGrid");
+      guestData.forEach((guest, index) => {
+        const guestCard = createGuestCard(guest, index);
+        guestGrid.appendChild(guestCard);
+      });
+    </script>
+  </body>
 </html>
