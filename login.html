@@ -36,12 +36,18 @@
         width: 400px;
         max-width: 90%;
         transition: all 0.3s ease-in-out;
+        text-align: center; /* Center-align content */
       }
 
       .login-container h2 {
         margin-bottom: 30px;
         text-align: center;
         font-size: 28px;
+      }
+
+      .login-container img {
+        width: 100px; /* Adjust size as needed */
+        margin-bottom: 20px; /* Space below the logo */
       }
 
       .login-container input,
@@ -116,12 +122,14 @@
   </head>
   <body>
     <div class="login-container">
+      <!-- Logo Added Here -->
+      <img src="./zamfaralogo.jpg" alt="Logo" />
+
       <h2>Login</h2>
 
       <input type="text" id="username" placeholder="Username" required />
       <input type="password" id="password" placeholder="Password" required />
 
-      <!-- <label for="guestList">Select Guest List:</label> -->
       <select id="guestList" required>
         <option value="">Select Guest List</option>
         <option value="governor">Governor's Guest</option>
